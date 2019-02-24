@@ -64,7 +64,7 @@ QString TelepathyShareUploader::displayName () const
 QUrl TelepathyShareUploader::serviceIcon () const
 {
     // Url to the icon which should be shown in the transfer UI
-    return QUrl("image://theme/icon-s-message");
+    return QUrl::fromLocalFile("/usr/share/themes/sailfish-default/meegotouch/z1.75/icons/icon-m-service-xmpp.png");
 }
 
 bool TelepathyShareUploader::cancelEnabled () const

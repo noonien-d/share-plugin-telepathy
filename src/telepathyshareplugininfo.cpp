@@ -46,6 +46,8 @@ void TelepathySharePluginInfo::query()
     // Path to the Sharing UI which this plugin provides.
     info.shareUIPath     = QLatin1String("/usr/share/nemo-transferengine/plugins/ShareTelepathyList.qml");
 
+    info.accountIcon = QLatin1String("/usr/share/themes/sailfish-default/meegotouch/z1.75/icons/icon-m-service-xmpp.png");
+
     // Pass information about supported mime types
     info.capabilitities    << QLatin1String("text/x-url")
                            << QLatin1String("text/vcard")
