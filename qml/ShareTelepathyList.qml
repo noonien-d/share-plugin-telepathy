@@ -73,13 +73,11 @@ Page {
         anchors.fill: parent
 
         enabled: true
-        searchEnabled: false
-        searchableProperty: PeopleModel.AccountUriSearchable
+
+        searchActive: true
+        searchableContactProperty: PeopleModel.AccountUriSearchable
 
         placeholderText: qsTrId("contacts-la-add_people")
-
-        handleEdit: false
-        deleteOnlyContextMenu: true
 
         onContactClicked: {
             console.log(contact.id + " '" + contact.firstName +"' '"+ contact.lastName + "'")
