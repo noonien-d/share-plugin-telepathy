@@ -12,14 +12,14 @@
  * You should have received a copy of the GNU General Public License along with this program;
  * if not, see <http://www.gnu.org/licenses/>. */
 
-import QtQuick 2.0
+import QtQuick 2.6
 
 import Sailfish.Silica 1.0
 import Sailfish.Contacts 1.0
 import org.nemomobile.contacts 1.0
 import Sailfish.TransferEngine 1.0
 
-Page {
+SilicaFlickable {
     id : root
 
     property url source
@@ -27,47 +27,45 @@ Page {
     property string methodId
     property bool scaleImage : true
 
-    SilicaFlickable {
-        anchors.fill: parent
+    width: Screen.width
+    height: Screen.height
 
-        Column {
-            width: parent.width
+    Column {
+        width: parent.width
+        padding: Theme.paddingLarge
 
-            PageHeader {
-                visible: root.contactid != ""
-                title: qsTr("Options")
-            }
-
-            Label {
-                id: nameLabel
-                visible: root.contactid != ""
-                width: 480
-                text: qsTr("Receipient") + ": " + root.contactid
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            TextSwitch {
-                id: scaleSwitch
-                visible: root.contactid != ""
-                text: qsTr("Scale Image")
-                checked: true
-                onCheckedChanged: {
-                    root.scaleImage = checked
-                }
+    	PageHeader {
+            visible: root.contactid != ""
+            title: qsTr("Options")
+        }
+        Label {
+            id: nameLabel
+            visible: root.contactid != ""
+            width: 480
+            text: qsTr("Receipient") + ": " + root.contactid
+        }
+        TextSwitch {
+            id: scaleSwitch
+            visible: root.contactid != ""
+            text: qsTr("Scale Image")
+            checked: true
+            onCheckedChanged: {
+                root.scaleImage = checked
             }
         }
         Button{
             text: qsTr("Start")
             visible: root.contactid != ""
             width: Theme.buttonWidthMedium
-            anchors {
-                bottom: parent.bottom
-                horizontalCenter: parent.horizontalCenter
-                bottomMargin: Theme.paddingLarge
+            anchors.horizontalCenter: parent.horizontalCenter
+            onClicked: {
+                shareItem.start();
+                shareAction.done();
             }
-
-            onClicked: {shareItem.start();pageStack.pop();}
         }
     }
+
+
     ContactBrowser {
         id: contactBrowser
         anchors.fill: parent
@@ -92,13 +90,16 @@ Page {
                 }
             }
         }
-        SailfishShare
-        {
-            id: shareItem
-            source: root.source
-            metadataStripped: true
-            serviceId: root.methodId
-            userData: {"description": "Telepathy File Transfer", "targetid": root.contactid, "scaleimage": root.scaleImage}
-        }
+    }
+    property var shareAction
+    Component.onCompleted: {
+        shareItem.loadConfiguration(shareAction.toConfiguration())
+    }
+    SailfishTransfer
+    {
+        id: shareItem
+        source: root.source
+        metadataStripped: true
+        userData: {"description": "Telepathy File Transfer", "targetid": root.contactid, "scaleimage": root.scaleImage}
     }
 }
