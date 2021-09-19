@@ -23,10 +23,9 @@ SOURCES += \
 OTHER_FILES +=
 
 shareui.files = qml/ShareTelepathyList.qml
+shareui.path = $$[QT_INSTALL_PREFIX]/share/nemo-transferengine/plugins
 
-shareui.path = /usr/share/nemo-transferengine/plugins
-
-target.path = /usr/lib/nemo-transferengine/plugins
+target.path = $$[QT_INSTALL_LIBS]/nemo-transferengine/plugins
 INSTALLS += target shareui
 
 DISTFILES += target shareui \
