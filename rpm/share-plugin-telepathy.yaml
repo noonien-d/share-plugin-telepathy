@@ -1,6 +1,6 @@
 Name: share-plugin-telepathy
 Summary: share plugin for Telepathy file transfer
-Version: 0.5
+Version: 0.6
 Release: 1
 # The contents of the Group field should be one of the groups listed here:
 # http://gitorious.org/meego-developer-tools/spectacle/blobs/master/data/GROUPS
@@ -33,11 +33,14 @@ PkgConfigBR:
 
 # Runtime dependencies which are not automatically detected
 Requires:
+  - nemo-transferengine-qt5 >= 2.0.0
+  - declarative-transferengine-qt5 >= 0.0.44
 
 # All installed files
 Files:
-  - '%{_libdir}/nemo-transferengine/plugins/libshare-plugin-telepathy.so'
-  - '%{_datadir}/nemo-transferengine/plugins/ShareTelepathyList.qml'
+  - '%{_libdir}/nemo-transferengine/plugins/sharing/libtelepathyshareplugin.so'
+  - '%{_libdir}/nemo-transferengine/plugins/transfer/libtelepathytransferplugin.so'
+  - '%{_datadir}/nemo-transferengine/plugins/sharing/ShareTelepathyList.qml'
 
 # For more information about yaml and what's supported in Sailfish OS
 # build system, please see https://wiki.merproject.org/wiki/Spectacle

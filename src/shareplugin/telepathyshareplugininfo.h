@@ -12,36 +12,22 @@
  * You should have received a copy of the GNU General Public License along with this program;
  * if not, see <http://www.gnu.org/licenses/>. */
 
-#include "telepathyshareplugin.h"
-#include "telepathyshareuploader.h"
-#include "telepathyshareplugininfo.h"
-#include <QtPlugin>
+#ifndef TELEPATHYSHAREPLUGININFO_H
+#define TELEPATHYSHAREPLUGININFO_H
 
-TelepathySharePlugin::TelepathySharePlugin()
+#include "sharingplugininfo.h"
+
+class TelepathySharePluginInfo : public SharingPluginInfo
 {
-}
+    Q_OBJECT
+public:
+    TelepathySharePluginInfo();
+    ~TelepathySharePluginInfo();
 
-TelepathySharePlugin::~TelepathySharePlugin()
-{
-}
+    QList<SharingMethodInfo> info() const;
+    void query();
+private:
+    QList<SharingMethodInfo> m_infoList;
+};
 
-MediaTransferInterface * TelepathySharePlugin::transferObject()
-{
-    return new TelepathyShareUploader;
-}
-
-TransferPluginInfo *TelepathySharePlugin::infoObject()
-{
-    return new TelepathySharePluginInfo;
-}
-
-QString TelepathySharePlugin::pluginId() const
-{
-    return "share-plugin-telepathy";
-}
-
-bool TelepathySharePlugin::enabled() const
-{
-    return true;
-}
-
+#endif // TELEPATHYSHAREPLUGININFO_H

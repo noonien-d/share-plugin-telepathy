@@ -17,7 +17,6 @@
 #include "telepathyshareplugininfo.h"
 
 TelepathySharePluginInfo::TelepathySharePluginInfo()
-    : m_ready(false)
 {
     qDebug() << "created plugin info";
 }
@@ -27,43 +26,38 @@ TelepathySharePluginInfo::~TelepathySharePluginInfo()
 
 }
 
-QList<TransferMethodInfo> TelepathySharePluginInfo::info() const
+QList<SharingMethodInfo> TelepathySharePluginInfo::info() const
 {
     return m_infoList;
 }
 
 void TelepathySharePluginInfo::query()
 {
-    TransferMethodInfo info;
+    SharingMethodInfo info;
+    QStringList capabilities;
 
     // Display name for plugin
-    info.displayName     = qtTrId("Telepathy file transfer");
+    info.setDisplayName(qtTrId("Telepathy file transfer"));
 
     // Method ID is a unique identifier for this plugin. It is used to identify which share plugin should be
     // used for starting the sharing.
-    info.methodId        = QLatin1String("share-plugin-telepathy");
+    info.setMethodId(QLatin1String("Telepathy-Share-Method-ID"));
 
     // Path to the Sharing UI which this plugin provides.
-    info.shareUIPath     = QLatin1String("/usr/share/nemo-transferengine/plugins/ShareTelepathyList.qml");
+    info.setShareUIPath(QLatin1String("/usr/share/nemo-transferengine/plugins/sharing/ShareTelepathyList.qml"));
 
-    info.accountIcon = QLatin1String("/usr/share/themes/sailfish-default/meegotouch/z1.75/icons/icon-m-service-xmpp.png");
+    info.setMethodIcon(QLatin1String("/usr/share/themes/sailfish-default/meegotouch/z1.75/icons/icon-m-service-xmpp.png"));
 
     // Pass information about supported mime types
-    info.capabilitities    << QLatin1String("text/x-url")
+    capabilities           << QLatin1String("text/x-url")
                            << QLatin1String("text/vcard")
                            << QLatin1String("audio")
                            << QLatin1String("image/jpeg")
                            << QLatin1String("image/png");
-
+    info.setCapabilities(capabilities);
 
     m_infoList << info;
 
     // Let the world know that this plugin is ready
-    m_ready = true;
     emit infoReady();
-}
-
-bool TelepathySharePluginInfo::ready() const
-{
-    return m_ready;
 }

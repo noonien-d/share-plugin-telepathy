@@ -38,7 +38,7 @@
 #include "telepathyshareclienthandler.h"
 
 TelepathyShareUploader::TelepathyShareUploader (QObject *parent):
-    MediaTransferInterface (parent), mHandler(NULL)
+    MediaTransferInterface (parent)
 {
     qDebug() << "created uploader";
 
@@ -49,11 +49,7 @@ TelepathyShareUploader::TelepathyShareUploader (QObject *parent):
 
 TelepathyShareUploader::~TelepathyShareUploader ()
 {
-    if (mHandler)
-    {
-        delete mHandler;
-        mHandler = NULL;
-    }
+
 }
 
 QString TelepathyShareUploader::displayName () const

@@ -1,0 +1,6 @@
+*.so
+moc_*
+*.o
+*.rpm
+Makefile
+*.spec
