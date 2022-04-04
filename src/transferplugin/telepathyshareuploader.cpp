@@ -85,8 +85,26 @@ void TelepathyShareUploader::start ()
 
     mTargetId = mediaItem()->value(MediaItem::UserData).toMap()["targetid"].toString();
     mScaleImage = mediaItem()->value(MediaItem::UserData).toMap()["scaleimage"].toBool();
-    mFilePath = mediaItem()->value(MediaItem::Url).toString().replace("file://", "");
 
+    qDebug() << mediaItem()->value(MediaItem::MimeType).toString()
+             << mediaItem()->value(MediaItem::TransferType).toString()
+             << mediaItem()->value(MediaItem::ContentData).toString()
+             << mediaItem()->value(MediaItem::Url).toString();
+
+    if(mediaItem()->value(MediaItem::Url).isValid()) {
+        mFilePath = mediaItem()->value(MediaItem::Url).toUrl().toLocalFile();
+    } else {
+        QTemporaryFile tmpfile;
+        tmpfile.setAutoRemove(false);
+        if (!tmpfile.open()) {
+            qDebug() << "Failed to open temporary file";
+            setStatus(MediaTransferInterface::TransferInterrupted);
+            return;
+        }
+        tmpfile.write(mediaItem()->value(MediaItem::ContentData).toString().toUtf8());
+        tmpfile.close();
+        mFilePath = tmpfile.fileName();
+    }
 
     const QDBusConnection &dbus = QDBusConnection::sessionBus();
     if (mRegistrar.isNull())
