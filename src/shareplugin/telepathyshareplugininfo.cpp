@@ -49,11 +49,7 @@ void TelepathySharePluginInfo::query()
     info.setMethodIcon(QLatin1String("/usr/share/themes/sailfish-default/meegotouch/z1.75/icons/icon-m-service-xmpp.png"));
 
     // Pass information about supported mime types
-    capabilities           << QLatin1String("text/x-url")
-                           << QLatin1String("text/vcard")
-                           << QLatin1String("audio")
-                           << QLatin1String("image/jpeg")
-                           << QLatin1String("image/png");
+    capabilities << QLatin1String("*");
     info.setCapabilities(capabilities);
 
     m_infoList << info;
